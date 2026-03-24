@@ -5,3 +5,4 @@ __pycache__/
 .ipynb_checkpoints/
 *.tmp
 *.temp
+data/raw/citibike/trips/
