@@ -1,0 +1,12 @@
+start_station_id,start_station_name,start_lat,start_lng,matched_station_id,matched_station_name,GEOID,match_method,confidence_note
+4077.07,Court St & Nelson St,40.67633767739252,-73.9987316158716,66de4b0b-0aca-11e7-82f6-3863bb44ef7c,Court St & Huntington St,36047007700,coordinate_only_fallback,low (distance 46.1 m)
+4488.08,Court St & State St,40.69023749999998,-73.99203074000002,3d835eaa-a102-42c5-b6c0-2c693b1d0677,Schermerhorn St & Court St,36047000900,coordinate_only_fallback,low (distance 88.8 m)
+4645.09,Hicks St & Montague St,40.69512845,-73.99595065,2026068766494475116,Montague St & Hicks St,36047000301,coordinate_only_fallback,low (distance 11.1 m)
+4801.04,Melrose St & Broadway,40.697481,-73.93587699999998,2142879839954225698,Arion Pl & Broadway,36047038900,coordinate_only_fallback,low (distance 79.0 m)
+5847.06,W 10 St & Washington St,40.7334239943708,-74.00851495563984,2104275164415193448,Washington St & W 10 St,36061007500,coordinate_only_fallback,low (distance 14.8 m)
+5883.06,Van Dam St & Greenpoint Ave,40.73443564069459,-73.93790781497955,2100948436010992354,Review Ave & Greenpoint Ave,36081019901,coordinate_only_fallback,low (distance 24.1 m)
+6190.03,W 18 St & 9 Ave,40.7435337324616,-74.00367558002472,66dc11a7-0aca-11e7-82f6-3863bb44ef7c,9 Ave & W 18 St,36061008300,coordinate_only_fallback,low (distance 40.0 m)
+6644.08,9 Ave & W 39 St,40.756403523272475,-73.99410143494606,66dc4fb5-0aca-11e7-82f6-3863bb44ef7c,W 39 St & 9 Ave,36061011500,coordinate_only_fallback,low (distance 32.5 m)
+8635.08,Grand Concourse & E 196 St,40.86767000000001,-73.89286000000004,2127386600787000162,E 196 St & Valentine Ave,36005040302,coordinate_only_fallback,low (distance 78.3 m)
+Lab - NYC - Monolith,Lab - NYC - M,40.7541804,-73.9964658,05c5e17c-7aa9-49b7-9da3-9db4858ec1fc,W 35 St & 9 Ave,36061011100,coordinate_only_fallback,low (distance 32.0 m)
+SYS033,Pier 40 X2,40.728486861173785,-74.01169271324761,66ddbdb1-0aca-11e7-82f6-3863bb44ef7c,Pier 40 - Hudson River Park,36061003700,coordinate_only_fallback,low (distance 92.2 m)

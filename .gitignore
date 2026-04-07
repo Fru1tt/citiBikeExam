@@ -6,3 +6,13 @@ __pycache__/
 *.tmp
 *.temp
 data/raw/citibike/trips/
+
+# Large processed files - reproducible from source data via src/ scripts
+data/processed/station_day_starts_2025.csv
+data/processed/station_day_ends_2025.csv
+data/processed/master_station_day_context_2025.csv
+data/processed/final_master_station_day_context_2025.csv
+data/processed/final_master_station_day_context_analysis_ready_2025.csv
+
+# Claude Flow internal directory
+.claude-flow/
