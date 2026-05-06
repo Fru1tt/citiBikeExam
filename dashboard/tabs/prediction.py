@@ -119,7 +119,7 @@ def _regression_tile(df: pd.DataFrame, borough: str, band: str) -> None:
     col_text, col_chart = st.columns([3, 2])
     with col_text:
         st.markdown(
-            f"An OLS regression across all {fit['n']:,} stations uses median household income, "
+            f"A linear regression across all {fit['n']:,} stations uses median household income, "
             f"subway stations within 500m, household density, and car-free household share "
             f"to predict average daily rides. Together these structural factors explain "
             f"**{fit['r2']*100:.0f}% of the variation in daily ridership** (R² = {fit['r2']:.2f})."
@@ -153,8 +153,8 @@ def _regression_tile(df: pd.DataFrame, borough: str, band: str) -> None:
             st.dataframe(coef_df, width="stretch", hide_index=True)
             st.caption(
                 "Each coefficient shows how daily rides change when that predictor goes up by one unit. "
-                "Fit by ordinary least squares on complete rows. "
-                "The four predictors do not overlap meaningfully (VIF below 2 for each)."
+                "Fit by linear regression on rows with complete data. "
+                "Standard checks confirm none of the four variables is measuring the same thing as another."
             )
 
     with col_chart:
@@ -376,8 +376,9 @@ def _scenario_section(df: pd.DataFrame) -> None:
         f"Rides per dock = selection rides/day ÷ {int(total_docks):,} docks."
     )
 
+    co2_direction = "avoided" if co2_avoided_lbs >= 0 else "added"
     st.markdown(
-        f"**Estimated CO₂ avoided from this gain: {co2_avoided_lbs/1_000_000:+,.2f} million lbs per year** "
+        f"**Estimated CO₂ {co2_direction} from this scenario: {abs(co2_avoided_lbs)/1_000_000:,.2f} million lbs per year** "
         f"(0.73 lbs per trip, from Citi Bike's December 2025 operating report using the 2012 MTA Sustainability Report methodology)."
     )
 

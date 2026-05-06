@@ -97,7 +97,8 @@ def _panel_r3(df: pd.DataFrame) -> None:
     st.subheader("R3: Dock investment should wait for demand")
     st.caption(
         "Rides per dock measures how many rides each dock generates per day on average. "
-        f"A value of {DOCK_THRESHOLD} is used here as a threshold for genuine demand on the existing docks."
+        f"A value of {DOCK_THRESHOLD} is used here as a threshold because it is roughly double the current Low-band average (0.81 rides per dock), "
+        "so reaching it would signal that demand has genuinely shifted rather than fluctuated around the current baseline."
     )
 
     below = df[df["rides_per_dock"] < DOCK_THRESHOLD]
