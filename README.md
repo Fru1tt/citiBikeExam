@@ -6,6 +6,12 @@ The exam asks for a data-driven business analysis delivered as a DBA report, an 
 
 The analysis covers 43.3 million trips across 2,164 stations in 2025, enriched with ACS census socioeconomics (income, poverty, vehicle access) at the tract level, MTA subway proximity, and borough context. The central question: are low-income neighbourhoods being underserved by Citi Bike — and what does the data say about why?
 
+## Live dashboard
+
+The deployed dashboard is at https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/
+
+It has four tabs (Overview, Explore, Prediction, Recommendations) and reads the same `station_summary_2025.csv` produced by the pipeline below.
+
 ## Repository structure
 
 - `app.py` — Streamlit dashboard entry point
@@ -14,16 +20,6 @@ The analysis covers 43.3 million trips across 2,164 stations in 2025, enriched w
 - `data/raw/` — original source data (Citi Bike, ACS census, MTA subway, shapefiles)
 - `data/processed/` — cleaned analysis-ready datasets
 - `docs/data_dictionary.md` — column-level description of the final datasets
-
-## Running the dashboard
-
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-The dashboard reads `data/processed/station_summary_2025.csv` (one row per station, 2,164 rows).
 
 ## Reproducing the pipeline
 
@@ -43,6 +39,18 @@ Raw trip CSVs are not committed (too large). They are available from the Citi Bi
 ## Final datasets
 
 - `station_summary_2025.csv` — 2,164 rows (one per station). Full-year averages plus neighborhood context. Used by the dashboard and all report charts.
-- `station_daily_2025.csv` — 720,486 rows (one per station per day). Generated as a bridge artifact by stages 20–33 and used by stages 40–51 to build the summary. Not committed (120 MB); reproduce by running the pipeline.
+- `station_daily_2025.csv` — 720,485 rows (one per station per day). Generated as a bridge artifact by stages 20–33 and used by stages 40–51 to build the summary. Not committed (120 MB); reproduce by running the pipeline.
 
 See `docs/data_dictionary.md` for a full column-level description.
+
+## Running locally (optional)
+
+The deployed Streamlit instance above is the primary access path. To run the dashboard locally instead:
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+The dashboard reads `data/processed/station_summary_2025.csv` (one row per station, 2,164 rows).
