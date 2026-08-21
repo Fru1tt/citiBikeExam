@@ -1,27 +1,37 @@
-# citiBike
+# Where Citi Bike Is Losing Value
 
-Exam project for EDI 36001 — Digital Business Analysis at BI Norwegian Business School, spring 2026.
+**A neighborhood-level analysis of ridership gaps across New York's bike share, and what to do about them.**
 
-The exam asks for a data-driven business analysis delivered as a DBA report, an interactive dashboard, and a short video. We chose NYC Citi Bike because it has detailed open trip data and clear real-world implications around equity and urban mobility.
+Citi Bike ran 43.3 million trips across 2,164 stations in 2025, but the network is unevenly used. Stations in the lowest income band average 23 rides per day; stations in the highest average 114. This project combines a full year of trip records with census income, household density, subway access and car ownership to work out where the gap sits, what explains it, and what Citi Bike should do before its operating contract with New York City comes up for renewal in 2029.
 
-The analysis covers 43.3 million trips across 2,164 stations in 2025, enriched with ACS census socioeconomics (income, poverty, vehicle access) at the tract level, MTA subway proximity, and borough context. The central question: are low-income neighbourhoods being underserved by Citi Bike — and what does the data say about why?
+**[Read the report](docs/report.md)** · **[Technical report](docs/technical_report.md)** · **[Live dashboard](https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/)** · PDF versions: [report](docs/CitiBike-Report.pdf), [technical](docs/CitiBike-Technical-Report.pdf)
 
-## Live dashboard
+![Station ridership and income band across NYC](docs/figures/station-ridership-and-income-band-across-nyc.png)
 
-The deployed dashboard is at https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/
+## What the analysis found
 
-It has four tabs (Overview, Explore, Prediction, Recommendations) and reads the same `station_summary_2025.csv` produced by the pipeline below.
+- Four neighborhood variables (median household income, subway access, household density, car-free household share) explain 45% of the variation in station ridership across the network.
+- The 273 low-income Bronx stations average 11 rides per day against a system average of 56, and 16 rides per day below what the regression predicts from their demographics alone. The gap survives a Poisson cross-check and is the clearest unexplained gap in the network.
+- Supply is not the problem. Docks at low-income stations are used about a third as often as docks at high-income ones (0.81 rides per dock per day against 2.66), so building more of them would not close the gap.
+- The low-income riders who do use the system ride like commuters: weekday-heavy, longer trips, and an 81% e-bike rate, the highest in the network. The product fits their needs. Cost and awareness are the most plausible barriers filtering other riders out.
+- The report recommends a subsidized-membership pilot in the Bronx, e-bike prioritization at stations that are both low-income and far from the subway, redirecting planned dock investment toward demand-side action, and borough-level accountability in Citi Bike's monthly reporting. It also says plainly what the data cannot prove: members riding more does not show that membership causes more riding.
 
-## Repository structure
+If those 273 Bronx stations reached the next band's average of 29 rides per day, that alone would add roughly 1.79 million rides per year with no new infrastructure.
 
+## How it was built
+
+The dashboard and every chart in the report read one dataset, built by a Python pipeline from five public sources: Citi Bike trip records and station feed, American Community Survey socioeconomics, MTA subway locations, and census tract boundaries. The [technical report](docs/technical_report.md) documents every step, the analytical decisions, and the robustness checks; [the data dictionary](docs/data_dictionary.md) describes every column.
+
+### Repository structure
+
+- `docs/` — the report, the technical report, figures, and the data dictionary
 - `app.py` — Streamlit dashboard entry point
 - `dashboard/` — dashboard tabs, data loader, theme
-- `src/` — Python pipeline scripts (numbered by stage, see below)
+- `src/` — Python pipeline scripts, numbered by stage
 - `data/raw/` — original source data (Citi Bike, ACS census, MTA subway, shapefiles)
 - `data/processed/` — cleaned analysis-ready datasets
-- `docs/data_dictionary.md` — column-level description of the final datasets
 
-## Reproducing the pipeline
+### Reproducing the pipeline
 
 Scripts in `src/` are numbered by stage — run them in numerical order to rebuild every processed dataset from the raw sources.
 
@@ -34,18 +44,11 @@ Scripts in `src/` are numbered by stage — run them in numerical order to rebui
 | `40_`–`42_` | Build and enrich the station-level summary with income/poverty bands, borough, weekday/weekend metrics |
 | `50_`–`51_` | Final cleanup — produce `station_summary_2025.csv` and `station_daily_2025.csv` |
 
-Raw trip CSVs are not committed (too large). They are available from the Citi Bike public S3 bucket under `citibike-tripdata/2025/`.
+Raw trip CSVs are not committed (too large). They are available from the Citi Bike public S3 bucket under `citibike-tripdata/2025/`. The final `station_summary_2025.csv` (2,164 rows, one per station) is committed and is what the dashboard and all report charts read.
 
-## Final datasets
+### Running the dashboard locally
 
-- `station_summary_2025.csv` — 2,164 rows (one per station). Full-year averages plus neighborhood context. Used by the dashboard and all report charts.
-- `station_daily_2025.csv` — 720,485 rows (one per station per day). Generated as a bridge artifact by stages 20–33 and used by stages 40–51 to build the summary. Not committed (120 MB); reproduce by running the pipeline.
-
-See `docs/data_dictionary.md` for a full column-level description.
-
-## Running locally (optional)
-
-The deployed Streamlit instance above is the primary access path. To run the dashboard locally instead:
+The deployed Streamlit instance linked above is the primary access path. To run it locally instead:
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -53,4 +56,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The dashboard reads `data/processed/station_summary_2025.csv` (one row per station, 2,164 rows).
+## Who
+
+A two-person exam project for EDI 3600 Digital Business Analysis at BI Norwegian Business School, spring 2026. The AI-use declarations at the end of each report describe how AI tools were used, and how every number and citation was verified independently of them.
