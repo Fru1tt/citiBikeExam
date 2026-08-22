@@ -4,7 +4,7 @@
 
 Citi Bike ran 43.3 million trips across 2,164 stations in 2025, but the network is unevenly used. Stations in the lowest income band average 23 rides per day; stations in the highest average 114. This project combines a full year of trip records with census income, household density, subway access and car ownership to work out where the gap sits, what explains it, and what Citi Bike should do before its operating contract with New York City comes up for renewal in 2029.
 
-**[Read the report](docs/report.md)** · **[Technical report](docs/technical_report.md)** · **[Live dashboard](https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/)** · PDF versions: [report](docs/CitiBike-Report.pdf), [technical](docs/CitiBike-Technical-Report.pdf)
+**[Read the report (PDF)](docs/CitiBike-Report.pdf)** · **[Technical report (PDF)](docs/CitiBike-Technical-Report.pdf)** · **[Live dashboard](https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/)**
 
 ![Station ridership and income band across NYC](docs/figures/station-ridership-and-income-band-across-nyc.png)
 
@@ -20,11 +20,11 @@ If those 273 Bronx stations reached the next band's average of 29 rides per day,
 
 ## How it was built
 
-The dashboard and every chart in the report read one dataset, built by a Python pipeline from five public sources: Citi Bike trip records and station feed, American Community Survey socioeconomics, MTA subway locations, and census tract boundaries. The [technical report](docs/technical_report.md) documents every step, the analytical decisions, and the robustness checks; [the data dictionary](docs/data_dictionary.md) describes every column.
+The dashboard and every chart in the report read one dataset, built by a Python pipeline from five public sources: Citi Bike trip records and station feed, American Community Survey socioeconomics, MTA subway locations, and census tract boundaries. The [technical report](docs/CitiBike-Technical-Report.pdf) documents every step, the analytical decisions, and the robustness checks; [the data dictionary](docs/data_dictionary.md) describes every column.
 
 ### Repository structure
 
-- `docs/` — the report, the technical report, figures, and the data dictionary
+- `docs/` — the report and technical report (PDF), figures, and the data dictionary
 - `app.py` — Streamlit dashboard entry point
 - `dashboard/` — dashboard tabs, data loader, theme
 - `src/` — Python pipeline scripts, numbered by stage
