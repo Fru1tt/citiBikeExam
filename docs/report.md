@@ -186,7 +186,7 @@ Car-free household share, the percentage of households without a car, looks like
 | Moderate | 46.2 | 10,397 |
 | Low | 26.9 | 6,382 |
 
-Stations in the highest car-free areas have the most rides. The reason is not that car-free households are especially active cyclists. It is that the highest car-free areas in New York City are dense Manhattan neighborhoods where people do not own cars because they do not need one; they already have strong subway access and walkable streets. Bronx low-income stations sit on the opposite end: their tracts have a high car-free share (0.74) but low density and limited subway access.
+Stations in the highest car-free areas have the most rides, but the reason isn't that car-free households cycle more. The highest car-free areas in NYC are dense Manhattan neighborhoods, and density does two things at once: it brings lots of riders (more people, more trips), and it makes cars unnecessary (subway and walkable streets cover most needs). The same dense neighborhoods score high on both because density causes both. Car-free share is along for the ride. The Bronx makes this concrete. Bronx low-income tracts also have a high car-free share (0.74), but their density and subway access are low, and their ridership is low. If car-free households were really driving ridership, the Bronx would ride more. It doesn't.
 
 A useful counter-check sits inside this dataset: across all 2,164 stations, income and car-free share are almost uncorrelated (r = −0.07). This rules out the simple reading that car-free share is just a stand-in for low income, meaning a variable that is only high in poor neighborhoods and therefore adds nothing on top of income. The relevant split is between dense, well-connected, low-car-ownership neighborhoods (Manhattan) and lower-density, less-connected, low-car-ownership neighborhoods (parts of the Bronx).
 
@@ -282,9 +282,9 @@ Citi Bike performs well on environmental metrics in aggregate. Using a methodolo
 
 But the sustainability benefit is unevenly spread. The stations generating the most trips are in high-income, well-connected neighborhoods. Low-income neighborhoods, which tend to have more traffic pollution and less green space, are generating far fewer trips from the same network. A more evenly used network would deliver greater environmental and social benefit across the city, not just in areas that already have good transport options. Closing the ridership gap is therefore not only a revenue opportunity. It is a way of making the environmental and social value of the network more equitable, which is the economic sustainability dimension as well.
 
-There is also an individual dimension. For riders in low-income areas, access to a reliable, affordable bike-share service can reduce commute times, improve physical health through regular cycling, and give people more control over how they get around. The data shows these riders already use Citi Bike as a commuting tool; expanding access through subsidized membership would extend those benefits to more individuals. On the other hand, the system collects trip data on every ride, which raises questions about how much riders know about what is being tracked and whether they have meaningful choices about that.
+There is also an individual dimension. For riders in low-income areas, access to a reliable, affordable bike-share service can reduce commute times, improve physical health through regular cycling, and give people more control over how they get around. The data shows these riders already use Citi Bike as a commuting tool; expanding access through subsidized membership would extend those benefits to more individuals.
 
-The technical dimension concerns whether the system itself can be maintained and adapted over time. Citi Bike's infrastructure already exists in low-income areas, and the analysis shows it has spare capacity. The recommendations in this report do not require building new technical systems; they require making better use of existing ones. However, as e-bike usage increases at these stations, the company will need to make sure that its fleet management, battery logistics, and rebalancing operations can handle the shift without creating new maintenance problems. Across the five dimensions, the ridership gap is not only a financial problem but a challenge that touches environmental access, social inclusion, individual wellbeing, and long-term system resilience.
+The technical dimension concerns whether the system itself can be maintained and adapted over time. Citi Bike's infrastructure already exists in low-income areas, and the analysis shows it has spare capacity. The recommendations in this report do not require building new technical systems; they require making better use of existing ones. However, as e-bike usage increases at these stations, the company will need to make sure that its fleet management, battery logistics, and rebalancing operations can handle the shift without creating new maintenance problems. Across the five dimensions, the ridership gap is more than a financial problem. It touches environmental access, social inclusion, individual wellbeing, and the system's long-term resilience.
 
 ### 7.2 Digital Responsibility
 
@@ -294,7 +294,7 @@ Any company using data at this scale has a responsibility to be transparent abou
 
 As the company uses data more actively to guide outreach and fleet decisions, it should keep data use aligned with its stated policies and with what riders would reasonably expect.
 
-The Corporate Digital Responsibility (CDR) framework (Wade, 2020) provides a structured way to assess these issues. Three of the seven principles in the CDR Manifesto (Corporate Digital Responsibility Initiative, n.d.) are directly relevant here. Principle 1 (Purpose and Trust) applies because Citi Bike's use of neighborhood income data to guide resource allocation must be transparent; riders and communities should be able to see why certain stations get more attention than others. Principle 2 (Fair and Equitable Access for All) applies because the current ridership gap means the service is not fully accessible to the neighborhoods that could benefit from it most, which is exactly the kind of inclusion gap this principle is meant to surface. Principle 4 (Consider Economic and Societal Impact) applies because acting on the analysis in this report means using data not just to optimize revenue, but to distribute access more fairly across the city.
+The Corporate Digital Responsibility (CDR) framework (Wade, 2020) provides a structured way to assess these issues. Three of the seven principles in the CDR Manifesto (Corporate Digital Responsibility Initiative, n.d.) are directly relevant here. Principle 1 (Purpose and Trust) applies because Citi Bike's use of neighborhood income data to guide resource allocation must be transparent; riders and communities should be able to see why certain stations get more attention than others. Principle 2 (Fair and Equitable Access for All) applies because the ridership gap means the service is not reaching the neighborhoods that could benefit from it most. That is exactly the kind of access gap this principle is meant to flag. Principle 4 (Consider Economic and Societal Impact) applies because acting on the analysis in this report means using data not just to optimize revenue, but to distribute access more fairly across the city.
 
 ### 7.3 Ethical Considerations
 
@@ -366,11 +366,9 @@ Wade, M. (2020). *Corporate responsibility in the digital era*. MIT Sloan Manage
 
 ## Appendix: Declaration of AI Use
 
-This declaration covers AI use on the DBA report. AI use on the data pipeline and the technical report is documented in the Use of AI declaration at the end of the technical report.
+This declaration covers AI use on the CitiBike report. AI use on the data pipeline and the technical report is documented in the Use of AI declaration at the end of the technical report.
 
 **AI tools that have been used in the work on assignment/exam:**
-
-Name (and version) of the AI tool:
 
 - Claude (Anthropic, Opus 4.7)
 - Codex (OpenAI, GPT-5.5)
@@ -379,19 +377,19 @@ Name (and version) of the AI tool:
 
 We have used AI while undertaking our assignment in the following ways:
 
-- To develop research questions on the topic — No
-- To generate ideas — Yes
-- To create an outline of the topic — Yes
-- To explain concepts — Yes
-- To support our use of language — Yes
-- To organise data — No (covered in the technical report's declaration)
-- To analyse data — No (covered in the technical report's declaration)
-- To visualise data — No (covered in the technical report's declaration)
+- To develop research questions on the topic - No
+- To generate ideas - Yes
+- To create an outline of the topic - Yes
+- To explain concepts - Yes
+- To support our use of language - Yes
+- To organise data - No (covered in the technical report's declaration)
+- To analyse data - No (covered in the technical report's declaration)
+- To visualise data - No (covered in the technical report's declaration)
 
 **In other ways, as described below:**
 
-AI's main value here was in pressure-testing our analysis, not writing it. The conclusions, framework applications, and recommendations are our own. AI helped us by playing devil's advocate, pointing out where an argument was weaker than we thought, asking what a critical reader would push back on, and checking whether each of the four required frameworks (SusAF, CDR, Ethical Navigation Wheel, Circular Economy) actually connected to our findings rather than being applied superficially. It also helped us keep the voice consistent across the report (Citi Bike as the audience throughout, plain English, no jargon), which is harder than it sounds when you have been staring at the same prose for too long. The tighter feedback loop pushed us to defend our reasoning out loud, which made gaps easier to see.
+AI's main value here was in pressure-testing our analysis, not writing it. The conclusions, framework applications, and recommendations are our own. AI helped us by playing devil's advocate, pointing out where an argument was weaker than we thought, asking what a critical reader would push back on, and checking whether each of the four required frameworks (SusAF, CDR, Ethical Navigation Wheel, Circular Economy) actually connected to our findings rather than being applied superficially. It also helped us keep the voice consistent across the report (Citi Bike as the audience throughout, plain English, no jargon), which is harder than it sounds when you have been staring at the same text for too long. The tighter feedback loop pushed us to defend our reasoning out loud, which made gaps easier to see.
 
-We worked with two AI systems in parallel. Claude (Anthropic, Opus 4.7) was the primary writing partner. Codex (OpenAI, GPT-5.5) was a secondary reviewer working in a separate session with no shared context, used for independent passes on substantive work. Running things through both and reconciling caught inconsistencies that one system alone would have missed. We kept a persistent file-based memory across sessions for our writing standard, our framing decisions, and our citation verification log, so each session continued from the previous one without re-explaining context. For larger pieces of work we followed a structured workflow of brainstorming, written spec, written plan, then execution, which forced us to commit to an approach before writing rather than discovering it along the way.
+We worked with two AI systems in parallel: Claude (Anthropic, Opus 4.7) as the primary writing partner, and Codex (OpenAI, GPT-5.5) as a secondary reviewer working in a separate session with no shared context. Single AI systems can hallucinate or commit confidently to a wrong reading of a finding or a framework. Running substantive sections through both partners separately let each AI's output be challenged by the other: where they agreed, the argument was likely sound; where they disagreed, we knew we had not yet thought it through. The result was a more nuanced view than either system would have produced alone, and a much lower chance of an unchallenged AI mistake making it into the report. We kept a persistent file-based memory across sessions for our writing standard, our framing decisions, and our citation verification log, so each session continued from the previous one without re-explaining context. For larger pieces of work we followed a structured workflow of brainstorming, written spec, written plan, then execution, which forced us to commit to an approach before writing rather than discovering it along the way.
 
 Every number in this report was verified against the processed dataset. Every citation was confirmed against the original source before being kept: academic citations against publisher records or DOI redirects, framework citations against the EDI 3600 lecturer's class slides, and the IBO and Comptroller citations against the source PDFs. AI was unreliable for factual claims and references, so AI-suggested citations were treated as unverified until checked independently. We are responsible for everything in this report.

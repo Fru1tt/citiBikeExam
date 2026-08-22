@@ -1,7 +1,10 @@
 # Technical Report: Citi Bike NYC 2025
 
-**Course:** EDI 3600, Digital Business Analysis
-**BI Norwegian Business School, Spring 2026**
+### Where Citi Bike Is Losing Value — A Neighborhood-Level Analysis of Ridership Gaps and What to Do About Them
+
+EDI 3600 Digital Business Analysis, BI Norwegian Business School, Spring 2026
+
+Dashboard: https://citibikeexam-cbzpwj3bmkpkp2tq5efncv.streamlit.app/ · GitHub repository: https://github.com/Fru1tt/citiBikeExam
 
 ---
 
@@ -9,7 +12,7 @@
 
 This report asks a single question: which neighborhood characteristics are linked to low ridership at Citi Bike stations, and what should the company do about it? Answering it required combining five separate data sources into one clean dataset and using both summary comparisons and a regression to test what the patterns mean.
 
-The DBA report presents the findings and the recommendations. This report shows the work behind them: how the data was built, what analytical decisions we made, and how those decisions were tested. The dataset covers 43.3 million trips across 2,164 stations in 2025.
+The CitiBike report presents the findings and the recommendations. This report shows the work behind them: how the data was built, what analytical decisions we made, and how those decisions were tested. The dataset covers 43.3 million trips across 2,164 stations in 2025.
 
 ---
 
@@ -19,13 +22,13 @@ Five data sources were combined into one station-level dataset.
 
 | Source | What it provides | How it was accessed |
 |--------|------------------|---------------------|
-| Citi Bike trip records, 2025 (Citi Bike, 2025a) | Start station, date, bike type, member or casual status for every trip | Monthly CSV files from the Citi Bike public S3 bucket |
-| Citi Bike station feed, GBFS (Citi Bike, 2025b) | Dock capacity, GPS coordinates, station names for all active stations | Snapshot taken March 2026 from the GBFS API |
+| Citi Bike trip records, 2025 (Citi Bike, 2025) | Start station, date, bike type, member or casual status for every trip | Monthly CSV files from the Citi Bike public S3 bucket |
+| Citi Bike station feed, GBFS (Citi Bike, 2025) | Dock capacity, GPS coordinates, station names for all active stations | Snapshot taken March 2026 from the GBFS API |
 | American Community Survey, 5-year estimates 2020-2024 (U.S. Census Bureau, 2024a) | Median household income, poverty rate, car-free household share, household density per neighborhood | JSON files via the US Census API |
 | MTA Subway Stations (Metropolitan Transportation Authority, 2025) | Locations of all 496 subway stations in NYC | CSV from the MTA open-data platform |
 | Census tract shapefiles, TIGER/Line 2024 (U.S. Census Bureau, 2024b) | Geographic boundaries for every census tract in New York State | Downloaded from the US Census Bureau |
 
-The five sources together let us link each station to its neighborhood. Citi Bike's trip records and station feed tell us how busy each station is and how many docks it has. The ACS data brings in the neighborhood traits we want to test against ridership: income (economic access), poverty rate (a related affordability check), car-free household share (how reliant the neighborhood already is on alternatives to driving), and household density. The MTA subway data lets us measure transit access at each station, since the subway is the main alternative to bike share in NYC. The census tract shapefiles are the geographic key that lets us attach ACS data to stations through their coordinates.
+The five sources together let us link each station to its neighborhood. Citi Bike's trip records and station feed tell us how busy each station is and how many docks it has. The ACS (American community survey) data brings in the neighborhood traits we want to test against ridership: income (economic access), poverty rate (a related affordability check), car-free household share (how reliant the neighborhood already is on alternatives to driving), and household density. The MTA subway data lets us measure transit access at each station, since the subway is the main alternative to bike share in NYC. The census tract shapefiles are the geographic key that lets us attach ACS data to stations through their coordinates.
 
 The GBFS bundle pulled in March 2026 also included a real-time station-status snapshot. We investigated using it to measure broken-bike and broken-dock patterns directly. Why that approach was ruled out is in §6.
 
@@ -33,7 +36,7 @@ The GBFS bundle pulled in March 2026 also included a real-time station-status sn
 
 ## 3. Pipeline
 
-The pipeline is a series of Python scripts in `src/`, each producing an output file that feeds into the next. The work maps onto the BI Value Chain (Brohman et al., 2000) used throughout EDI 3600: the Business Problem and Task Definition are stated in §1, §§3.1–3.2 cover the Exploratory Data Analysis stage, §§3.3–3.5 cover the Structured Data Analysis stage, the analytical work in §§4–5 produces the Explanation and Prediction findings, and the Decision Making and Business Value stages live in the DBA report.
+The pipeline is a series of Python scripts in `src/`, each producing an output file that feeds into the next. The work maps onto the BI Value Chain (Brohman et al., 2000) used throughout EDI 3600: the Business Problem and Task Definition are stated in §1, §§3.1–3.2 cover the Exploratory Data Analysis stage, §§3.3–3.5 cover the Structured Data Analysis stage, the analytical work in §§4–5 produces the Explanation and Prediction findings, and the Decision Making and Business Value stages live in the CitiBike report.
 
 ### 3.1 Understanding the raw data
 
@@ -89,43 +92,46 @@ This section covers the decisions made before any statistical test was run.
 
 **Variable choice.** Income was chosen as the primary lens because it showed the clearest and most consistent link to ridership. Poverty rate was excluded from the regression because it moves with income at r = -0.70. That is close enough that including both adds nothing; income carries the same signal. Car-free household share was kept because it moves almost independently of income (r = -0.07), so it adds information that income on its own does not capture.
 
-**Trip-level variables we set aside.** The raw Citi Bike trip records include the destination station and the exact end time of every trip, not just the start station and date we used. Pairing starts and ends would let us study trip flows: whether riders cross neighborhood boundaries, how stations connect to commute routes, how ridership links richer and poorer parts of the city. We did not include destination stations because our question is about ridership at each station (a count at one location), not flows between stations (a network). What we kept from the trip data (date, average trip duration, e-bike share) was already enough to spot the commuter pattern the DBA report's §4.4 rests on: weekday-heavy usage, longer trips, and e-bike preference at low-income stations. A separate analysis of trip flows was not needed to answer the question. The raw data still supports that analysis if a follow-up project wants to run it.
+**Trip-level variables we set aside.** The raw Citi Bike trip records include the destination station and the exact end time of every trip, not just the start station and date we used. Pairing starts and ends would let us study trip flows: whether riders cross neighborhood boundaries, how stations connect to commute routes, how ridership links richer and poorer parts of the city. We did not include destination stations because our question is about ridership at each station (a count at one location), not flows between stations (a network). What we kept from the trip data (date, average trip duration, e-bike share) was already enough to spot the commuter pattern the CitiBike report's §4.4 rests on: weekday-heavy usage, longer trips, and e-bike preference at low-income stations. A separate analysis of trip flows was not needed to answer the question. The raw data still supports that analysis if a follow-up project wants to run it.
 
 **Band design.** Stations were grouped into four bands of about 540 each (Low, Mid-Low, Mid-High, High). Equal-count bands keep comparisons across bands fair: no one band drowns out another by sheer size. Bands also read more cleanly for a business audience than regression coefficients. Bands carry the headline numbers; the regression cross-checks them.
 
 **Metric design.** The headline metrics answer both business and access questions at once, instead of treating them as separate concerns. Rides per dock shows where docks are underused and also tells us how heavily each station is used. Member share is a revenue indicator and also flags affordability barriers in low-income neighborhoods. Electric-bike share shows what kind of bikes people are choosing and also flags longer commutes in areas with weaker transit access. Each metric tells two things at once, which keeps the analysis focused on the same numbers throughout.
 
-**Bands vs regression.** Bands carry the narrative because they are easier to read. The regression tests whether the income pattern survives once density, subway access, and car-free share are held fixed at the same time. We ran a four-variable linear regression on average daily rides across all 2,164 stations. It explains 45% of the variation (R² = 0.45), and the income signal survives. The full coefficients are reported in DBA §5.1.
+**Bands vs regression.** Bands carry the narrative because they are easier to read. The regression tests whether the income pattern survives once density, subway access, and car-free share are held fixed at the same time. We ran a four-variable linear regression on average daily rides across all 2,164 stations. It explains 45% of the variation (R² = 0.45), and the income signal survives. The full coefficients are reported in the CitiBike report §5.1.
 
 ---
 
 ## 5. Robustness checks
 
-The DBA report's findings rest on four pieces of evidence: the band comparisons, the regression, a check on which groups the model gets wrong (which points at the Bronx Low cluster), and a within-Low-band test that ruled out a specific ridership-uplift claim. This section shows the checks behind those pieces.
+The CitiBike report's findings rest on four pieces of evidence: the band comparisons, the regression, a check on which groups the model gets wrong (which points at the Bronx Low cluster), and a within-Low-band test that ruled out a specific ridership-uplift claim. This section shows the checks behind those pieces.
 
 **Predicted vs actual rides by group.** We used the regression to compute each station's predicted ridership and the gap between predicted and actual rides. Averaging by borough and band gives the table below, sorted from biggest under-prediction to biggest over-prediction.
 
-| Group | n | Predicted | Actual | Gap |
+| Group | N | Predicted | Actual | Gap |
 |-------|---|-----------|--------|-----|
-| Queens High | 27 | 89.6 | 50.9 | -38.8 |
-| Bronx Low | 273 | 26.6 | 11.0 | -15.7 |
-| Brooklyn High | 199 | 91.9 | 80.2 | -11.7 |
-| Bronx Mid-Low | 43 | 18.7 | 10.9 | -7.8 |
-| Queens Low | 28 | 26.2 | 19.0 | -7.3 |
-| Brooklyn Mid-Low | 197 | 33.6 | 27.9 | -5.6 |
-| Brooklyn Low | 92 | 21.1 | 19.4 | -1.7 |
-| Manhattan Low | 149 | 45.0 | 47.9 | +2.9 |
-| Manhattan High | 312 | 132.4 | 141.1 | +8.7 |
-| Manhattan Mid-Low | 90 | 64.0 | 80.0 | +16.0 |
-| Manhattan Mid-High | 130 | 92.8 | 141.9 | +49.1 |
+| Queens High | 27 | 89.65 | 50.89 | -38.76 |
+| Bronx Low | 273 | 26.64 | 10.99 | -15.65 |
+| Brooklyn High | 199 | 91.89 | 80.19 | -11.70 |
+| Bronx Mid-Low | 43 | 18.66 | 10.90 | -7.76 |
+| Queens Low | 28 | 26.24 | 18.97 | -7.27 |
+| Brooklyn Mid-Low | 197 | 33.57 | 27.93 | -5.65 |
+| Queens Mid-High | 165 | 27.41 | 22.54 | -4.87 |
+| Brooklyn Mid-High | 249 | 44.95 | 41.08 | -3.87 |
+| Brooklyn Low | 92 | 21.07 | 19.41 | -1.66 |
+| Queens Mid-Low | 210 | 11.73 | 12.85 | +1.13 |
+| Manhattan Low | 149 | 45.01 | 47.94 | +2.93 |
+| Manhattan High | 312 | 132.41 | 141.13 | +8.72 |
+| Manhattan Mid-Low | 90 | 63.97 | 79.96 | +15.99 |
+| Manhattan Mid-High | 130 | 92.79 | 141.91 | +49.12 |
 
-Two patterns matter. First, every outer-borough Low and Mid-Low group rides below what the model predicts. Bronx Low is the biggest gap among the large groups at -16 rides per day. Queens High and Queens Low show big numbers but small samples (n = 27 and n = 28), so they are noisy and we do not lean on them. Second, Manhattan does better than predicted across all bands. The model misses some Manhattan factors, such as CBD activity, tourism, and density beyond household density. That is a separate question, not the focus of the DBA recommendations.
+Two patterns matter. First, every outer-borough Low and Mid-Low group rides below what the model predicts. Bronx Low is the biggest gap among the large groups at -16 rides per day. Queens High and Queens Low show big numbers but small samples (n = 27 and n = 28), so they are noisy and we do not lean on them. Second, Manhattan does better than predicted across all bands. The model misses some Manhattan factors, such as the Central Business District activity, tourism, and density beyond household density. That is a separate question, not the focus of the CitiBike recommendations.
 
 **Poisson cross-check.** A linear regression assumes ridership sits on a smooth straight line, but daily rides are non-negative counts. We re-ran the same test using a Poisson regression, a method built for count data. Bronx Low still came out the worst large group. In the Poisson model the gap is actually larger (-19.75 rides per day versus the linear model's -15.65), because Poisson predicts 30.75 rides per day for Bronx Low rather than the linear model's 26.64. The finding holds either way. We also tried a Negative Binomial fit but it did not produce a stable result, so we do not report it.
 
 **Why we kept the linear model anyway.** A linear regression can predict negative ridership at the low end, which is impossible. Across the 2,164 stations, the linear model predicts a negative number for 144 of them. The Poisson check confirms the finding is not a side effect of using the linear model: Poisson produces zero negative predictions and ranks Bronx Low the same way. We kept the linear model as the headline because its coefficients are easier to read in plain English (a $10,000 increase in median income adds 6.1 more rides per day, for example), and used Poisson as the cross-check.
 
-**Within Bronx Low: the over-performers.** Performance is not the same across the 273 Bronx Low stations. A small subset runs at roughly 1.13 rides per dock per day, more than double the 0.49 average across the rest of the group. They sit on the borough's main commercial and commuter corridors (Grand Concourse, Fordham Road, 3rd Avenue, Arthur Avenue), not the highest-income or best subway-connected tracts. We trust rides per dock more than the over-performer count itself. The count varies from 6 to 23 stations depending on which model and threshold we use, but rides per dock does not. So the DBA report leads with rides per dock (which does not depend on the model) and treats the corridor pattern as supporting evidence.
+**Within Bronx Low: the over-performers.** Performance is not the same across the 273 Bronx Low stations. A small subset runs at roughly 1.13 rides per dock per day, more than double the 0.49 average across the rest of the group. They sit on the borough's main commercial and commuter streets (Grand Concourse, Fordham Road, 3rd Avenue, Arthur Avenue), not the highest-income or best subway-connected tracts. We trust rides per dock more than the over-performer count itself. The count varies from 6 to 23 stations depending on which model and threshold we use, but rides per dock does not. So the CitiBike report leads with rides per dock (which does not depend on the model) and treats the commercial street cluster as supporting evidence.
 
 **The Recommendation 2 e-bike test.** An earlier version of Recommendation 2 (prioritise e-bikes at low-income, subway-poor stations) carried a 10–15% ridership-uplift estimate. We tested whether the data supported it before keeping it.
 
@@ -143,23 +149,21 @@ The simplest explanation is that e-bike share is a sign of who uses the station,
 
 **Excluded stations.** Stations that could not be matched to complete NYC census tract data were dropped. Most sit in Jersey City and Hoboken, outside the scope of the question. The full reconciliation is in §3.5.
 
-**Service quality, what we tried.** One alternative we looked at was using Citi Bike's real-time station-status feed (part of GBFS) to measure broken bikes and broken docks at low-income stations directly. We pulled a snapshot in March 2026 to see what the feed contained. The feed only reports the current state of each station; there is no historical record, and no comprehensive third-party archive of the feed exists for 2025. We cannot rebuild a picture of service quality across the year from a single snapshot, so the DBA report cites the Comptroller's 2023 service-quality finding as a contributing factor instead. The snapshot file is kept in `data/raw/citibike/stations/` as a record of what was investigated.
+**Service quality, what we tried.** One alternative we looked at was using Citi Bike's real-time station-status feed (part of GBFS) to measure broken bikes and broken docks at low-income stations directly. We pulled a snapshot in March 2026 to see what the feed contained. The feed only reports the current state of each station; there is no historical record, and no comprehensive third-party archive of the feed exists for 2025. We cannot rebuild a picture of service quality across the year from a single snapshot, so the CitiBike report cites the Comptroller's 2023 service-quality finding as a contributing factor instead. The snapshot file is kept in `data/raw/citibike/stations/` as a record of what was investigated.
 
 ---
 
 ## 7. Tools
 
-Python (pandas, numpy, geopandas) for the data pipeline. Streamlit for the interactive dashboard and every chart in the DBA report. Git and GitHub for version control. Claude (Anthropic) as a coding assistant during the pipeline phase; the full Use of AI declaration follows.
+Python (pandas, numpy, geopandas) for the data pipeline. Streamlit for the interactive dashboard and every chart in the CitiBike report. Git and GitHub for version control. Claude (Anthropic) as a coding assistant during the pipeline phase; the full Use of AI declaration follows.
 
 ---
 
 ## Use of AI
 
-This declaration covers AI use across the data pipeline and this technical report. AI use on the DBA report is documented in the Declaration of AI Use appendix at the end of that report.
+This declaration covers AI use across the data pipeline and this technical report. AI use on the CitiBike report is documented in the Declaration of AI Use appendix at the end of that report.
 
 **AI tools that have been used in the work on assignment/exam:**
-
-Name (and version) of the AI tool:
 
 - Claude (Anthropic, Opus 4.7)
 - Codex (OpenAI, GPT-5.5)
@@ -168,20 +172,20 @@ Name (and version) of the AI tool:
 
 We have used AI while undertaking our assignment in the following ways:
 
-- To develop research questions on the topic — No
-- To generate ideas — Yes
-- To create an outline of the topic — Yes
-- To explain concepts — Yes
-- To support our use of language — Yes
-- To organise data — Yes
-- To analyse data — Yes (for code and calculation, not for analytical conclusions)
-- To visualise data — Yes
+- To develop research questions on the topic - No
+- To generate ideas - Yes
+- To create an outline of the topic - Yes
+- To explain concepts - Yes
+- To support our use of language - Yes
+- To organise data - Yes
+- To analyse data - Yes (for code and calculation, not for analytical conclusions)
+- To visualise data - Yes
 
 **In other ways, as described below:**
 
 AI's main value here was not in writing. It was in making a deeper technical project workable for a two-person group. Combining five datasets, building a station-ID crosswalk, running the regression with both OLS and Poisson, computing per-group prediction errors, and building an interactive Streamlit dashboard would have been out of scope for a typical EDI 3600 project without AI partnership. AI wrote and debugged code, ran calculations, produced diagnostic checks, and pointed at alternative methods we would not have known to try on our own. The result was a much shorter feedback loop: we could test an idea, look at the numbers, and decide whether to keep it or drop it in minutes rather than days.
 
-We worked with two AI systems in parallel. Claude (Anthropic, Opus 4.7) was the primary partner for coding and drafting. Codex (OpenAI, GPT-5.5) was a secondary reviewer working in a separate session with no shared context, used for independent passes on substantive work. Running things through both and reconciling caught inconsistencies that one system alone would have missed. We kept a persistent file-based memory across sessions that held our methodological decisions and quality-control rules, so each session continued from the previous one without re-explaining context. For larger pieces of work we followed a structured workflow of brainstorming, written spec, written plan, then execution, which forced us to commit to an approach before writing rather than discovering it along the way.
+We worked with two AI systems in parallel: Claude (Anthropic, Opus 4.7) as the primary partner for coding and drafting, and Codex (OpenAI, GPT-5.5) as a secondary reviewer working in a separate session with no shared context. Single AI systems can hallucinate or commit confidently to a wrong answer, especially on detailed factual claims and statistical results. Running substantive work through both partners separately let each AI's output be challenged by the other: where they agreed, our confidence went up; where they disagreed, we knew to look closer. The result was a more nuanced view than either system would have produced alone, and a much lower chance of an AI mistake reaching the final report unnoticed. We kept a persistent file-based memory across sessions that held our methodological decisions and quality-control rules, so each session continued from the previous one without re-explaining context. For larger pieces of work we followed a structured workflow of brainstorming, written spec, written plan, then execution, which forced us to commit to an approach before writing rather than discovering it along the way.
 
 The analytical decisions were ours: which variables to include, which methods to test, which findings to lead with, what to recommend. Every script was checked against diagnostic outputs at each step. Every number in this report was verified against the processed CSV files. Every citation was confirmed against the original source before being kept; AI was unreliable for factual claims and references, so AI-suggested citations were treated as unverified until checked independently. We are responsible for all content in this report.
 
@@ -191,9 +195,7 @@ The analytical decisions were ours: which variables to include, which methods to
 
 Brohman, M. K., Parent, M., Pearce, M. R., & Wade, M. R. (2000). The business intelligence value chain: Data-driven decision support in a data warehouse environment: An exploratory study. In *Proceedings of the 33rd Annual Hawaii International Conference on System Sciences*. IEEE Computer Society. https://doi.org/10.1109/HICSS.2000.926905
 
-Citi Bike. (2025a). *Trip history* [Data set]. https://s3.amazonaws.com/tripdata/index.html
-
-Citi Bike. (2025b). *General Bikeshare Feed Specification (GBFS) station feed* [Data set]. https://citibikenyc.com/system-data
+Citi Bike. (2025). *System data: Trip history and station feed* [Data set]. https://citibikenyc.com/system-data
 
 Metropolitan Transportation Authority. (2025). *MTA subway stations* [Data set]. https://data.ny.gov/Transportation/MTA-Subway-Stations/39hk-dx4f
 
